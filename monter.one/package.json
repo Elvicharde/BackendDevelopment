@@ -1,0 +1,20 @@
+{
+  "name": "backenddevelopment",
+  "version": "1.0.0",
+  "description": "This repository is for hosting my backend development projects with Node and Python",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elvicharde/BackendDevelopment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Elvicharde/BackendDevelopment/issues"
+  },
+  "homepage": "https://github.com/Elvicharde/BackendDevelopment#readme"
+}
