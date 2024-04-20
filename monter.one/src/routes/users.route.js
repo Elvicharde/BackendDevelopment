@@ -7,7 +7,7 @@ import handleLogin from "../controllers/loginHandler.js";
 import handleRegistration from "../controllers/registrationHandler.js";
 
 // registration handlers
-router.route("/register").get(handleRegistration);
+router.route("/register").post(handleRegistration);
 
 //login handlers
 router.route("/login").get(handleLogin);

@@ -21,10 +21,11 @@ const dbCreds = process.env.dbCreds;
 //middleware use
 app.use(cors());
 app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // serving static html page for minimal frontend
-app.use("/public", express.static(`${process.cwd()}/public`));
+// app.use("/public", express.static(`${process.cwd()}/public`));
 
 // routes
 import { usersRouter } from "./src/routes/users.route.js";

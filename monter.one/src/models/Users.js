@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 mongoose.set("strictQuery", false);
 
@@ -21,6 +22,9 @@ const userSchema = new mongoose.Schema({
   workDetails: {
     type: String,
   },
+  verified: {
+    type: Boolean,
+  },
 });
 
 // Implementing register and login methods using the model.statics method
@@ -41,6 +45,7 @@ userSchema.statics.register = async function (email, password) {
   const user = await this.create({
     email,
     password: hashedPassword,
+    verified: false,
   });
 
   return user;
