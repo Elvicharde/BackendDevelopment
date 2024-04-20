@@ -1,19 +1,21 @@
 import jwt from "jsonwebtoken";
 import User from "../models/Users.js";
+import dotenv from "dotenv";
+
+// using environment variables to store sensitive credentials
+dotenv.config();
 
 const verifyAuthorization = async (req, res, next) => {
   // check for authorization token
-  const { authorization } = req.headers;
+  const { authorization: authToken } = req.headers;
 
-  if (!authorization) {
+  if (!authToken) {
     return res.status(401).json({ error: "Authorization token required!" });
   }
 
-  const authToken = authorization.split(" ")[1];
-
   try {
     const { _id } = jwt.verify(authToken, process.env.SECRET);
-    req.user = await User.findOne({ _id }).select("_id");
+    req.user = await User.findOne({ _id });
     next();
   } catch (error) {
     console.log(error);

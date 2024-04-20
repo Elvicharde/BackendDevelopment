@@ -65,12 +65,12 @@ const start = async () => {
 // start the server and connect to database.
 start();
 
-// handle unresolved or rejected promises and errors
-process.on("unhandledRejection", (err, _) => {
-  console.log(`[Error]: ${err.message}`);
-  res.status(500).json({
-    error: "Internal Server Error",
-  });
-  // close the server and exit process
-  app.close(() => process.exit(1));
+// production error handler
+const HTTP_SERVER_ERROR = 500;
+app.use(function (err, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  return res.status(err.status || HTTP_SERVER_ERROR).render("500");
 });
