@@ -28,13 +28,16 @@ app.use(express.json());
 // app.use("/public", express.static(`${process.cwd()}/public`));
 
 // routes
+import { authenticationsRouter } from "./src/routes/authentications.route.js";
 import { usersRouter } from "./src/routes/users.route.js";
 
 // Controllers
 import { dbConnector } from "./src/controllers/dbConnector.js";
 
 // configuring endpoints
-app.use("/api/v1/auth", usersRouter);
+app.use("/api/v1/auth", authenticationsRouter);
+
+app.use("/api/v1/users", usersRouter);
 
 // handle requests to all undefined endpoints
 app.use("*", (_, res) =>

@@ -58,6 +58,12 @@ userSchema.statics.login = async function (email, password) {
   if (!user) {
     throw Error("User not found, please register...");
   }
+
+  // check if user has verified account
+  if (!user.verified) {
+    throw Error("Please verify your account with the OTP in your email!");
+  }
+
   const expectedPassword = await bcrypt.compare(password, user.password);
 
   if (!expectedPassword) {

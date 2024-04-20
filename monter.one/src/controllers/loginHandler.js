@@ -1,5 +1,9 @@
 import jwt from "jsonwebtoken";
 import User from "../models/Users.js";
+import dotenv from "dotenv";
+
+// using environment variables to store sensitive credentials
+dotenv.config();
 
 export default async function handleLogin(req, res) {
   const { email, password } = req.body;
@@ -7,9 +11,14 @@ export default async function handleLogin(req, res) {
   // checking if user credentials are valid
   try {
     const user = await User.login(email, password);
+
     const sessionToken = createToken(user._id);
 
-    res.status(200).json({ email, sessionToken });
+    res.status(200).json({
+      status: "Success",
+      message: "Login Successful",
+      payload: { userId: user._id, email, sessionToken },
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

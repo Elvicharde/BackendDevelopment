@@ -3,13 +3,9 @@ import { Router } from "express";
 const router = Router();
 
 // importing controllers
-import handleLogin from "../controllers/loginHandler.js";
-import handleRegistration from "../controllers/registrationHandler.js";
+import { updateUser, fetchUserData } from "../controllers/usersController.js";
 
-// registration handlers
-router.route("/register").post(handleRegistration);
-
-//login handlers
-router.route("/login").get(handleLogin);
+//Update user details after verification and fetch user data handlers
+router.route("/:userId").get(fetchUserData).patch(updateUser);
 
 export { router as usersRouter };
