@@ -23,6 +23,46 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Implementing register and login methods using the model.statics method
+// register
+userSchema.statics.register = async function (email, password) {
+  const exists = await this.findOne({ email });
+
+  if (exists) {
+    throw Error(
+      "This email already exists, please register with a different email!"
+    );
+  }
+
+  // hashing the password for new user using bcrypt
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const user = await this.create({
+    email,
+    password: hashedPassword,
+  });
+
+  return user;
+};
+
+// login method
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+
+  if (!user) {
+    throw Error("User not found, please register...");
+  }
+  const expectedPassword = await bcrypt.compare(password, user.password);
+
+  if (!expectedPassword) {
+    throw Error("Incorrect password! Try again...");
+  }
+
+  // otherwise
+  return user;
+};
+
 // creating and exporting the User model
 const User = mongoose.model("User", userSchema);
 export default User;
